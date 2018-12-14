@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>{{shopid}}</title>
+
+	</head>
+	<body>
+		<h1 style="font-style:normal" align="center">{{shopid}}!</h1>
+		<nav class="nav-left mright10">
+		<!-- <div> -->
+			<ul>
+			{% if jdshopids %}
+				<li id='flowAnalysis' class='has-child '><span class='up-down'></span><span class='flow'>JD店铺列表</span>
+					<ul>
+    					{% for shopid in jdshopids %}
+						<li class=''><a>{{ jdshopids[shopid] }}({{ shopid }})</a></li>
+						{% endfor %}
+					</ul>
+				</li>
+            {% endif %}
+            {% if tmshopids %}
+				<li id='flowAnalysis' class='has-child '><span class='up-down'></span><span class='flow'>TM店铺列表</span>
+					<ul>
+    					{% for shopid in tmshopids %}
+						<li class=''><a>{{ tmshopids[shopid] }}({{ shopid }})</a></li>
+						{% endfor %}
+					</ul>
+				</li>
+            {% endif %}
+            {% if hnshops %}
+				<li id='flowAnalysis' class='has-child '><span class='up-down'></span><span class='flow'>ZY店铺列表</span>
+					<ul>
+    					{% for shopid in hnshops %}
+						<li class=''><a>{{ hnshops[shopid] }}({{ shopid }})</a>
+    						<ul><li><a href='./report1/report1.html'>report1</a></li></ul>
+						</li>
+						{% endfor %}
+						
+					</ul>
+				</li>
+            {% endif %}
+			</ul>
+		<!-- </div> -->
+		</nav>
+        <h1>流量</h1>
+	</body>
+</html>

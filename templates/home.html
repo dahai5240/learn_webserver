@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    	<meta charset="utf-8">
+		<title>Home</title>
+		<!-- falsk正确的引入js方式，引入 echarts.js -->
+		<script src="{{ url_for('static', filename='echarts.js') }}"></script>
+	</head>
+	<body>
+		<h1 style="font-style:normal" align="center">Home!</h1>
+		<nav class="nav-left mright10">
+		<!-- <div> -->
+			<ul>
+				<li id='flowAnalysis' class='has-child '><span class='up-down'></span><span class='flow'>JD店铺列表</span>
+					<ul>
+    					{% for shopid in jdshopids %}
+						<li class=''><a href='./templates/viewflow/shop/{{ shopid }}.html'>{{ jdshopids[shopid] }}({{ shopid }})</a></li>
+						{% endfor %}
+					</ul>
+				</li>
+				
+				<li id='flowAnalysis' class='has-child '><span class='up-down'></span><span class='flow'>TM店铺列表</span>
+					<ul>
+    					{% for shopid in tmshopids %}
+						<li class=''><a href='./templates/viewflow/shop/{{ shopid }}.html'>{{ tmshopids[shopid] }}({{ shopid }})</a></li>
+						{% endfor %}
+					</ul>
+				</li>
+
+				<li id='flowAnalysis' class='has-child '><span class='up-down'></span><span class='flow'>HN店铺列表</span>
+					<ul>
+    					{% for shopid in hnshops %}
+						<li class=''><a href='./templates/viewflow/shop/{{ shopid }}.html'>{{ hnshops[shopid] }}({{ shopid }})</a></li>
+						{% endfor %}
+					</ul>
+				</li>
+				
+			</ul>
+		<!-- </div> -->
+		</nav>
+		<nav><a href="./templates/set-echart.html">设计图表</a></nav>
+		<p id="mypar">这里是标签P</p>
+		<p>
+    		<button type="button" onclick="myF()" style="float:left;display:inline">点击这里</button>
+    		<button type="button" onclick="restF()" style="float:left;display:inline">你可以点我重置左边的按钮</button>
+		</p>
+		<br />
+		<p id="mypar2">点击这里上面会有东西发生变化</p>
+		<p>这下面是个图表例子</p>
+        <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+        {% for chart in num %}
+        <div id="chart{{ chart }}" style="width:400px;height:400px;float:left;display:inline;"></div>
+        {% endfor %}
+        <br />
+        <!-- <p style="float:lef">图表例子展示结束</p>-->
+        {% for chart in num %}
+        <script type="text/javascript">
+            // 基于准备好的dom，初始化echarts实例
+            var myChart{{ chart }} = echarts.init(document.getElementById('chart{{ chart }}'));
+            // 指定图表的配置项和数据
+            var str{{ chart }} = {{ echarts[chart]|tojson }};
+            var option{{ chart }} = eval('('+ str{{ chart }} +')');
+            // 使用刚指定的配置项和数据显示图表。
+            myChart{{ chart }}.setOption(option{{ chart }});
+        </script>
+        {% endfor %}
+        <script>
+            var myparstr=['这里是标签P','你点了下面的按钮！改变了该p标签','别点了，你已经点过了。'];
+            var flag=1;
+            function myF(){
+                if (flag==myparstr.length)
+                    {
+                    flag = myparstr.length-1;
+                    };
+                    document.getElementById('mypar').innerHTML=myparstr[flag]
+                    flag++;
+                };
+            function restF(){
+                document.getElementById('mypar').innerHTML=myparstr[0];
+                flag=1;
+                }
+        </script>
+        
+	</body>
+</html>
