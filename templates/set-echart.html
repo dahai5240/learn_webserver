@@ -13,7 +13,7 @@
 			提示：伪类名称对大小写不敏感。
 			-->
 		<style>
-		ul
+		#menu ul
 		{
 			list-style-type:none;
 			margin:0;
@@ -21,7 +21,7 @@
 			padding-top:12px;
 			padding-bottom:12px;
 		}
-		li
+		li.menu
 		{
 			display:inline;
 		}
@@ -40,50 +40,57 @@
 		{
 			background-color:#cc0000;
 		}
-		
 		</style>
 	</head>
 	<body>
     	<h1 style="font-style:normal" align="center">自定义图表</h1>
-    	<div id="echart_frame" style="width:1200px;height:800px;float:center;">
-        	<div id="headlist" style="width:1210px;height:48px;">
+		<!--设置左右居中的写法：margin: 0 auto-->
+    	<div id="echart_frame" style="width:1300px;height:800px;margin: 0 auto;">
+        	<div id="headlist" style="width:1300px;height:48px;">
 				<ul id="menu">
-					<li id="menu1"><a href title="chart1">chart1</a></li>
-					<li id="menu2"><a href title="chart2">chart2</a></li>
-					<li id="menu3"><a href title="chart3">chart3</a></li>
-					<li id="menu4"><a href title="chart4">chart4</a></li>
-					<li id="menu5"><a href title="chart5">chart5</a></li>
-					<li id="menu6"><a href title="chart6">chart6</a></li>
-					<li id="menu7"><a href title="chart7">chart7</a></li>
-					<li id="menu8"><a href title="chart8">chart8</a></li>
+					<li class="menu" id="menu1"><a href title="chart1">chart1</a></li>
+					<li class="menu" id="menu2"><a href title="chart2">chart2</a></li>
+					<li class="menu" id="menu3"><a href title="chart3">chart3</a></li>
+					<li class="menu" id="menu4"><a href title="chart4">chart4</a></li>
+					<li class="menu" id="menu5"><a href title="chart5">chart5</a></li>
+					<li class="menu" id="menu6"><a href title="chart6">chart6</a></li>
+					<li class="menu" id="menu7"><a href title="chart7">chart7</a></li>
+					<li class="menu" id="menu8"><a href title="chart8">chart8</a></li>
 				</ul>
 			</div>
-			<div id="leftlist" type="float:left;display:inline">
-				<div id="leftmenu">
-				<ul id="leftmenu">
-					<li class="leftmenu1"><button type="button" name="leftmenuButton1">leftmenu1</button></li>
-					<li class="leftmenu2"><button type="button" name="leftmenuButton2">leftmenu2</button></li>
-					<li class="leftmenu3"><button type="button" name="leftmenuButton3">leftmenu3</button></li>
-					<li class="leftmenu4"><button type="button" name="leftmenuButton4">leftmenu4</button></li>
-				</ul>
+			<div style="width:1400px;">
+				<div id="leftlist" style="width:300px;height:700px;float:left;display:inline;border:black solid thin;">
+					<h2>参数值选择</h2>
+					<div id="leftmenu">
+					<ul style="list-style-type:none;margin:0;padding:0;">
+						<input id="params-list" list="params" >
+						<datalist id="params">
+							<option value="para1">
+							<option value="para2">
+							<option value="para3">
+						</datalist>
+					</ul>
+					</div>
+					<div class="leftmenu1">
+					<ul style="list-style-type:none;margin:0;padding:0;">
+						<li class="leftmenu1" id="leftmenu1_set1">leftmenu1_set1:<input type="text" name="leftmenu1_set1" /></li>
+						<li class="leftmenu1" id="leftmenu1_set2">leftmenu1_set2:<input type="text" name="leftmenu1_set2" /></li>
+						<li class="leftmenu1" id="leftmenu1_set3">leftmenu1_set3:<input type="text" name="leftmenu1_set3" /></li>
+						<li class="leftmenu1" id="leftmenu1_set4">leftmenu1_set4:<input type="text" name="leftmenu1_set4" /></li>
+						<li class="leftmenu1" id="leftmenu1_set5">leftmenu1_set5:<input type="text" name="leftmenu1_set5" /></li>
+						<li class="leftmenu1" id="leftmenu1_set6">leftmenu1_set6:<input type="text" name="leftmenu1_set6" /></li>
+					</ul>
+					</div>
 				</div>
-				<div class="leftmenu1">
-				<ul class="leftmenu1">
-					<li class="leftmenu1" id="leftmenu1_set1">leftmenu1_set1:<input type="text" name="leftmenu1_set1" /></li><br />
-					<li class="leftmenu1" id="leftmenu1_set2">leftmenu1_set2:<input type="text" name="leftmenu1_set2" /></li><br />
-					<li class="leftmenu1" id="leftmenu1_set3">leftmenu1_set3:<input type="text" name="leftmenu1_set3" /></li><br />
-					<li class="leftmenu1" id="leftmenu1_set4">leftmenu1_set4:<input type="text" name="leftmenu1_set4" /></li><br />
-					<li class="leftmenu1" id="leftmenu1_set5">leftmenu1_set5:<input type="text" name="leftmenu1_set5" /></li><br />
-					<li class="leftmenu1" id="leftmenu1_set6">leftmenu1_set6:<input type="text" name="leftmenu1_set6" /></li><br />
-				</ul>
+				<div id="canvas" style="width:700px;height:700px;float:left;display:inline;border:black solid thin;">
+					<h2>画布</h2>
+					<canvas id="mianCanvas" type="width:1800px;height:1800px;">
+					</canvas>
+				</div>
+				<div id="echarts" style="width:300px;height:700px;float:left;display:inline;border:black solid thin;">
+					<h2>图类选择</h2>
 				</div>
 			</div>
-			<div id="canvas" type="float:left;display:inline">
-				<h2>画布</h2>
-				<canvas id="mianCanvas" type="width:1800px;height:1800px;">
-				</canvas>
-			</div>
-			<div><h2>待定义</h2></div>
     	</div>
 		
 		<br />
