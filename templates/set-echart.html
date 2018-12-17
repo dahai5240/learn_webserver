@@ -60,27 +60,32 @@
 			</div>
 			<div style="width:1400px;">
 				<div id="leftlist" style="width:300px;height:700px;float:left;display:inline;border:black solid thin;">
+				<form id="set-echarts-form" method="get">
 					<h2>参数值选择</h2>
 					<div id="leftmenu">
 					<ul style="list-style-type:none;margin:0;padding:0;">
-						<input id="params-list" list="params" >
-						<datalist id="params">
-							<option value="para1">
-							<option value="para2">
-							<option value="para3">
+						参数类：<input id="params-list" type="text" list="params-lists"/>
+						<datalist id="params-lists">
+							{% for para in params %}
+							<option value="{{ params[para] }}"/>
+							{% endfor %}
 						</datalist>
+					<br />
+					<input type="reset" value="清除"/>
+					<input type="submit" value="确定"/>
 					</ul>
 					</div>
-					<div class="leftmenu1">
-					<ul style="list-style-type:none;margin:0;padding:0;">
-						<li class="leftmenu1" id="leftmenu1_set1">leftmenu1_set1:<input type="text" name="leftmenu1_set1" /></li>
-						<li class="leftmenu1" id="leftmenu1_set2">leftmenu1_set2:<input type="text" name="leftmenu1_set2" /></li>
-						<li class="leftmenu1" id="leftmenu1_set3">leftmenu1_set3:<input type="text" name="leftmenu1_set3" /></li>
-						<li class="leftmenu1" id="leftmenu1_set4">leftmenu1_set4:<input type="text" name="leftmenu1_set4" /></li>
-						<li class="leftmenu1" id="leftmenu1_set5">leftmenu1_set5:<input type="text" name="leftmenu1_set5" /></li>
-						<li class="leftmenu1" id="leftmenu1_set6">leftmenu1_set6:<input type="text" name="leftmenu1_set6" /></li>
+					<div>
+					<ul id="set-lists" style="list-style-type:none;margin:0;padding:0;">
+						<!--{% for menu in menus %}
+							{% for m in menus[menu]%}
+							<li class="{{ menu }}_{{ m }}" id="{{ menus[menu][m] }}">{{ menus[menu][m] }}:<input type="text" name="{{ menus[menu][m] }}" /></li>
+							{% endfor %}
+						{% endfor %}-->
 					</ul>
 					</div>
+
+				</form>
 				</div>
 				<div id="canvas" style="width:700px;height:700px;float:left;display:inline;border:black solid thin;">
 					<h2>画布</h2>
@@ -97,6 +102,23 @@
 		
 		<script>
 			
+			var param = document.getElementById('params-list').value;
+			if (param){
+			param={{params[0]}};
+			};
+			var paramItem = {{ menus[param] }};
+			var paramItems = eval('('+ paramItem +')');
+			for (var i in paramItems )
+			{	
+				// var node=document.createElement("LI");
+				var listItem = "<li class='"+param+"_"+i+"' id='"+paramItems[i]+"'>"+paramItems[i]+":<input type='text' name='"+paramItems[i]+"' /></li>";
+				aF(listItem);
+			};
+			
+			function aF(listItem)
+			{
+				document.getElementById('set-lists').appendChild(listItem);
+			};
 		
 		</script>
 	</body>

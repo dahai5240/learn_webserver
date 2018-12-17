@@ -28,6 +28,7 @@ class data():
                      T02='tm店02',
                      T03='tm店03')
         self.hnshops = dict(ZY01='zy店01')
+        
     def jd(self):
         return self.jdshopids
     def tm(self):
@@ -261,13 +262,17 @@ def shop(shopid=None):
     if hnshops.get(shopid,0):
         return render_template('/viewflow/shop.html',shopid = shopid, hnshops={shopid:hnshops[shopid]})
 
-@app.route('/templates/viewflow/shop/<report>/<report_name>.html',methods=['GET'])
+@app.route('/templates/viewflow/shop/<report>/<report_name>.html')
 def report(report='report1', report_name='report1'):
     return render_template('/viewflow/shop/report1.html')
 
 @app.route('/templates/set-echart.html')
 def set_echarts():
-    return render_template('set-echart.html')
+    params = ["paravalues1","paravalues2","paravalues3"]
+    menus = dict(paravalues1=json.dumps(dict(a="leftmenu1_set1",b="leftmenu1_set2")),
+                 paravalues2=json.dumps(dict(a="leftmenu2_set1",b="leftmenu2_set2")),
+                 paravalues3=json.dumps(dict(a="leftmenu3_set1",b="leftmenu3_set2")))
+    return render_template('set-echart.html', params=params, menus=menus)
 
 if __name__=='__main__':
     app.run()                           #启动socket
