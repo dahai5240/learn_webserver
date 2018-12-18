@@ -269,10 +269,11 @@ def report(report='report1', report_name='report1'):
 @app.route('/templates/set-echart.html')
 def set_echarts():
     params = ["paravalues1","paravalues2","paravalues3"]
-    menus = dict(paravalues1=json.dumps(dict(a="leftmenu1_set1",b="leftmenu1_set2")),
-                 paravalues2=json.dumps(dict(a="leftmenu2_set1",b="leftmenu2_set2")),
-                 paravalues3=json.dumps(dict(a="leftmenu3_set1",b="leftmenu3_set2")))
-    return render_template('set-echart.html', params=params, menus=menus)
+    menus = dict(paravalues1=dict(a="leftmenu1_set1",b="leftmenu1_set2"),
+                 paravalues2=dict(a="leftmenu2_set1",b="leftmenu2_set2"),
+                 paravalues3=dict(a="leftmenu3_set1",b="leftmenu3_set2"))
+    menusJson = json.dumps(menus)
+    return render_template('set-echart.html', params=params, menus=menus, menusJson=menusJson)
 
 if __name__=='__main__':
     app.run()                           #启动socket

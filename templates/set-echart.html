@@ -41,6 +41,51 @@
 			background-color:#cc0000;
 		}
 		</style>
+		<script>
+			// menusJson为传入的json字符串
+			function fun()
+			{
+				var x='set_secend_param';
+				dF(x);
+				var param = document.getElementById('params-list').value;
+				var menusj = eval('('+ {{ menusJson|tojson }} +')');
+				if (param==''){
+					param="{{params[0]}}";
+					};
+				var paramItems = menusj[param];
+				// var paramItems = eval('('+ paramItem +')');
+				aF(param,paramItems);
+			};
+			function dF(x)
+			{
+				idob=document.getElementsByClassName(x);
+				for(i=0;i<idob.length;i++)
+				{
+					if(idob[i]!=null){
+						idob[i].parentNode.removeChild(idob[i]);
+					};
+				};
+			};
+			// aF添加标签li，param为选择的一级参数类，listItem为一级参数下的二级参数
+			function aF(param,listItem)
+			{
+				for(var p in listItem)
+				{
+					var setlists=document.getElementById('set-lists');
+					var li=document.createElement('li')
+					li.className="set_secend_param";
+					li.id=listItem[p];
+					li.innerText=listItem[p]+" : ";
+					setlists.appendChild(li);
+					var inp=document.createElement('input');
+					inp.type="text";
+					inp.name=listItem[p];
+					inp.style="width:100px;"
+					li.appendChild(inp);
+				};
+			};	
+		
+		</script>
 	</head>
 	<body>
     	<h1 style="font-style:normal" align="center">自定义图表</h1>
@@ -64,10 +109,10 @@
 					<h2>参数值选择</h2>
 					<div id="leftmenu">
 					<ul style="list-style-type:none;margin:0;padding:0;">
-						参数类：<input id="params-list" type="text" list="params-lists"/>
+						参数类：<input id="params-list" type="text" list="params-lists" onchange="fun()"/>
 						<datalist id="params-lists">
 							{% for para in params %}
-							<option value="{{ params[para] }}"/>
+							<option value="{{ para }}"/>
 							{% endfor %}
 						</datalist>
 					<br />
@@ -77,11 +122,7 @@
 					</div>
 					<div>
 					<ul id="set-lists" style="list-style-type:none;margin:0;padding:0;">
-						<!--{% for menu in menus %}
-							{% for m in menus[menu]%}
-							<li class="{{ menu }}_{{ m }}" id="{{ menus[menu][m] }}">{{ menus[menu][m] }}:<input type="text" name="{{ menus[menu][m] }}" /></li>
-							{% endfor %}
-						{% endfor %}-->
+
 					</ul>
 					</div>
 
@@ -100,26 +141,6 @@
 		
 		<br />
 		
-		<script>
-			
-			var param = document.getElementById('params-list').value;
-			if (param){
-			param={{params[0]}};
-			};
-			var paramItem = {{ menus[param] }};
-			var paramItems = eval('('+ paramItem +')');
-			for (var i in paramItems )
-			{	
-				// var node=document.createElement("LI");
-				var listItem = "<li class='"+param+"_"+i+"' id='"+paramItems[i]+"'>"+paramItems[i]+":<input type='text' name='"+paramItems[i]+"' /></li>";
-				aF(listItem);
-			};
-			
-			function aF(listItem)
-			{
-				document.getElementById('set-lists').appendChild(listItem);
-			};
-		
-		</script>
+
 	</body>
 </html>
