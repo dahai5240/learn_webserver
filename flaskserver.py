@@ -41,7 +41,7 @@ class Analysis_chart():
     def __init__(self):
         self.ana_type = None
         self.ana_statue = None
-        self.chart_lists = ['line-simple','area-basic','line-smooth']
+        self.chart_lists = ['line','pie','line-smooth','bar','funnel']
         self.xAxis = {}              #x轴
         self.yAxis = {}              #y轴
         self.series = {}             #系列，指数据分类
@@ -268,10 +268,13 @@ def report(report='report1', report_name='report1'):
 
 @app.route('/templates/set-echart.html')
 def set_echarts():
-    params = ["paravalues1","paravalues2","paravalues3"]
-    menus = dict(paravalues1=dict(a="leftmenu1_set1",b="leftmenu1_set2"),
-                 paravalues2=dict(a="leftmenu2_set1",b="leftmenu2_set2"),
-                 paravalues3=dict(a="leftmenu3_set1",b="leftmenu3_set2"))
+    #设计图表页面
+    params = ["paravalues1","paravalues2","paravalues3","paravalues4","paravalues5"]
+    menus = dict(paravalues1=dict(a="leftmenu1_set1",b="leftmenu1_set2",c="leftmenu1_set3",d="leftmenu1_set4"),
+                 paravalues2=dict(a="leftmenu2_set1",b="leftmenu2_set2",c="leftmenu2_set3"),
+                 paravalues3=dict(a="leftmenu3_set1",b="leftmenu3_set2",c="leftmenu3_set3",d="leftmenu3_set4",e="leftmenu3_set5"),
+                 paravalues4=dict(a="leftmenu4_set1",b="leftmenu4_set2",c="leftmenu4_set3"),
+                 paravalues5=dict(a="leftmenu5_set1",b="leftmenu5_set2"))
     menusJson = json.dumps(menus)
     return render_template('set-echart.html', params=params, menus=menus, menusJson=menusJson)
 

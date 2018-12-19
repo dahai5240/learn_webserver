@@ -53,20 +53,21 @@
 					param="{{params[0]}}";
 					};
 				var paramItems = menusj[param];
-				// var paramItems = eval('('+ paramItem +')');
 				aF(param,paramItems);
 			};
+			// dF 删除标签函数
 			function dF(x)
 			{
-				idob=document.getElementsByClassName(x);
-				for(i=0;i<idob.length;i++)
+				var idob=document.getElementsByClassName(x);
+				var num=idob.length;  // tips:在下面for循环中如果重复调用idob.length，idob会因为删除了节点值而发生变化，所以提前获取length值，用num替换循环
+				for(i=0;i<num;i++)
 				{
-					if(idob[i]!=null){
-						idob[i].parentNode.removeChild(idob[i]);
+					if(idob[0]!=null){
+						idob[0].parentNode.removeChild(idob[0]);
 					};
 				};
 			};
-			// aF添加标签li，param为选择的一级参数类，listItem为一级参数下的二级参数
+			// aF 添加标签li，param为选择的一级参数类，listItem为一级参数下的二级参数
 			function aF(param,listItem)
 			{
 				for(var p in listItem)
@@ -93,48 +94,62 @@
     	<div id="echart_frame" style="width:1300px;height:800px;margin: 0 auto;">
         	<div id="headlist" style="width:1300px;height:48px;">
 				<ul id="menu">
-					<li class="menu" id="menu1"><a href title="chart1">chart1</a></li>
-					<li class="menu" id="menu2"><a href title="chart2">chart2</a></li>
-					<li class="menu" id="menu3"><a href title="chart3">chart3</a></li>
-					<li class="menu" id="menu4"><a href title="chart4">chart4</a></li>
-					<li class="menu" id="menu5"><a href title="chart5">chart5</a></li>
-					<li class="menu" id="menu6"><a href title="chart6">chart6</a></li>
-					<li class="menu" id="menu7"><a href title="chart7">chart7</a></li>
-					<li class="menu" id="menu8"><a href title="chart8">chart8</a></li>
+					<li class="menu" id="menu1">线形图</li>
+					<li class="menu" id="menu2">条形图</li>
+					<li class="menu" id="menu3">饼状图</li>
+					<li class="menu" id="menu4">散点图</li>
+					<li class="menu" id="menu5">漏斗图</li>
 				</ul>
 			</div>
 			<div style="width:1400px;">
-				<div id="leftlist" style="width:300px;height:700px;float:left;display:inline;border:black solid thin;">
+				<div class="leftlist" style="width:300px;height:700px;float:left;display:inline;border:black solid thin;">
 				<form id="set-echarts-form" method="get">
-					<h2>参数值选择</h2>
+					<h2 style="width:300px;height:30px;margin:0;padding:0;">参数值选择</h2>
 					<div id="leftmenu">
-					<ul style="list-style-type:none;margin:0;padding:0;">
-						参数类：<input id="params-list" type="text" list="params-lists" onchange="fun()"/>
-						<datalist id="params-lists">
-							{% for para in params %}
-							<option value="{{ para }}"/>
-							{% endfor %}
-						</datalist>
-					<br />
-					<input type="reset" value="清除"/>
-					<input type="submit" value="确定"/>
-					</ul>
+						<ul style="list-style-type:none;margin:0;padding:0;">
+							参数类：<input id="params-list" type="text" list="params-lists" onchange="fun()"/>
+							<datalist id="params-lists">
+								{% for para in params %}
+								<option value="{{ para }}"/>
+								{% endfor %}
+							</datalist>
+						<br />
+						<input type="reset" value="清除"/>
+						<input type="submit" value="确定"/>
+						</ul>
 					</div>
 					<div>
-					<ul id="set-lists" style="list-style-type:none;margin:0;padding:0;">
-
-					</ul>
+						<ul id="set-lists" style="list-style-type:none;margin:0;padding:0;">
+						</ul>
 					</div>
-
 				</form>
 				</div>
-				<div id="canvas" style="width:700px;height:700px;float:left;display:inline;border:black solid thin;">
-					<h2>画布</h2>
+				<div class="canvas-container" style="width:700px;height:700px;float:left;display:inline;border:black solid thin;">
+					<h2 style="width:300px;height:30px;margin:0;padding:0;">画布</h2>
 					<canvas id="mianCanvas" type="width:1800px;height:1800px;">
 					</canvas>
 				</div>
-				<div id="echarts" style="width:300px;height:700px;float:left;display:inline;border:black solid thin;">
-					<h2>图类选择</h2>
+				<div class="echarts-controls" style="width:300px;height:700px;float:left;display:inline;border:black solid thin;">
+					<h2 style="width:300px;height:30px;margin:0;padding:0;">图表类选择</h2>
+					<div class="echarts-lists" style="width:300px;height:670px;overflow:auto;">
+						<ul style="list-style-type:none;margin:0;padding:0;width:280px;height:280px;">
+							<li style="list-style-type:none;margin:0;padding:0;border:black solid thin;">
+								<a><img src="{{ url_for('static',filename='./images/line.png') }}" alt="折线图" style="width:270px;height:270px;"/></a>
+							</li>
+							<li style="list-style-type:none;margin:0;padding:0;border:black solid thin;">
+								<a><img src="{{ url_for('static',filename='./images/line-smooth.png') }}" alt="曲线图" style="width:270px;height:270px;"/></a>
+							</li>
+							<li style="list-style-type:none;margin:0;padding:0;border:black solid thin;">
+								<a><img src="{{ url_for('static',filename='./images/bar.png') }}" alt="条形图" style="width:270px;height:270px;"/></a>
+							</li>
+							<li style="list-style-type:none;margin:0;padding:0;border:black solid thin;">
+								<a><img src="{{ url_for('static',filename='./images/pie.png') }}" alt="饼状图" style="width:270px;height:270px;"/></a>
+							</li>
+							<li style="list-style-type:none;margin:0;padding:0;border:black solid thin;">
+								<a><img src="{{ url_for('static',filename='./images/funnel.png') }}" alt="漏斗图" style="width:270px;height:270px;"/></a>
+							</li>
+						</ul>
+					</div>
 				</div>
 			</div>
     	</div>
