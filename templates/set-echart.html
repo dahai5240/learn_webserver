@@ -87,6 +87,22 @@
 			};	
 		
 		</script>
+		<script>
+			// allowDrop函数，规定拖动的对象可以放在的位置
+			function allowDrop(v){
+				v.preventDefault();
+			};
+			// drag函数，规定拖动对象，即拖动什么
+			function drag(v){
+				v.dataTransfer.setData("Img",v.target.id);
+			};
+			// drop函数，规定放下对象，即放下什么
+			function drop(v){
+				v.preventDefault();
+				var data=v.dataTransfer.getData("Img");
+				v.target.appendChild(document.getElementById(data).cloneNode());
+			};
+		</script>
 	</head>
 	<body>
     	<h1 style="font-style:normal" align="center">自定义图表</h1>
@@ -124,7 +140,7 @@
 					</div>
 				</form>
 				</div>
-				<div class="canvas-container" style="width:700px;height:700px;float:left;display:inline;border:black solid thin;">
+				<div class="canvas-container" ondrop="drop(event)" ondragover="allowDrop(event)" style="width:700px;height:700px;float:left;display:inline;border:black solid thin;">
 					<h2 style="width:300px;height:30px;margin:0;padding:0;">画布</h2>
 					<canvas id="mianCanvas" type="width:1800px;height:1800px;">
 					</canvas>
@@ -134,19 +150,19 @@
 					<div class="echarts-lists" style="width:300px;height:670px;overflow:auto;">
 						<ul style="list-style-type:none;margin:0;padding:0;width:280px;height:280px;">
 							<li style="list-style-type:none;margin:0;padding:0;border:black solid thin;">
-								<a><img src="{{ url_for('static',filename='./images/line.png') }}" alt="折线图" style="width:270px;height:270px;"/></a>
+								<img id="line" src="{{ url_for('static',filename='./images/line.png') }}" draggable="true" ondragstart="drag(event)" alt="折线图" style="width:270px;height:270px;"/>
 							</li>
 							<li style="list-style-type:none;margin:0;padding:0;border:black solid thin;">
-								<a><img src="{{ url_for('static',filename='./images/line-smooth.png') }}" alt="曲线图" style="width:270px;height:270px;"/></a>
+								<img id="line-smooth" src="{{ url_for('static',filename='./images/line-smooth.png') }}" draggable="true" ondragstart="drag(event)" alt="曲线图" style="width:270px;height:270px;"/>
 							</li>
 							<li style="list-style-type:none;margin:0;padding:0;border:black solid thin;">
-								<a><img src="{{ url_for('static',filename='./images/bar.png') }}" alt="条形图" style="width:270px;height:270px;"/></a>
+								<img id="bar" src="{{ url_for('static',filename='./images/bar.png') }}" draggable="true" ondragstart="drag(event)" alt="条形图" style="width:270px;height:270px;"/>
 							</li>
 							<li style="list-style-type:none;margin:0;padding:0;border:black solid thin;">
-								<a><img src="{{ url_for('static',filename='./images/pie.png') }}" alt="饼状图" style="width:270px;height:270px;"/></a>
+								<img id="pie" src="{{ url_for('static',filename='./images/pie.png') }}" draggable="true" ondragstart="drag(event)" alt="饼状图" style="width:270px;height:270px;"/>
 							</li>
 							<li style="list-style-type:none;margin:0;padding:0;border:black solid thin;">
-								<a><img src="{{ url_for('static',filename='./images/funnel.png') }}" alt="漏斗图" style="width:270px;height:270px;"/></a>
+								<img id="funnel" src="{{ url_for('static',filename='./images/funnel.png') }}" draggable="true" ondragstart="drag(event)" alt="漏斗图" style="width:270px;height:270px;"/>
 							</li>
 						</ul>
 					</div>
