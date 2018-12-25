@@ -103,12 +103,24 @@
 				v.target.appendChild(document.getElementById(data).cloneNode());
 			};
 		</script>
+		<script>
+			function setConvas(){
+				var wid=document.getElementById("canvas-width").value;
+				var hei=document.getElementById("canvas-height").value;
+				var Canvas=document.getElementById("mianCanvas");
+				if(wid<700){wid=700;};
+				if(hei<700){hei=700;};
+				Canvas.offsetHeight=hei;
+				Canvas.offsetWidth=wid;
+			}
+		</script>
 	</head>
 	<body>
     	<h1 style="font-style:normal" align="center">自定义图表</h1>
 		<!--设置左右居中的写法：margin: 0 auto-->
     	<div id="echart_frame" style="width:1300px;height:800px;margin: 0 auto;">
-        	<div id="headlist" style="width:1300px;height:48px;">
+        	<div id="headlist" style="width:1300px">
+				<div style="width:1300px;height:48px;">
 				<ul id="menu">
 					<li class="menu" id="menu1">线形图</li>
 					<li class="menu" id="menu2">条形图</li>
@@ -116,6 +128,11 @@
 					<li class="menu" id="menu4">散点图</li>
 					<li class="menu" id="menu5">漏斗图</li>
 				</ul>
+				</div>
+				<div style="width:600px;height:48px;">
+					宽度：<input id="canvas-width" type="number" style="width:50px;height:20px;" onchange="setConvas()" />
+					长度：<input id="canvas-height" type="number" style="width:50px;height:20px;" onchange="setConvas()" />
+				</div>
 			</div>
 			<div style="width:1400px;">
 				<div class="leftlist" style="width:300px;height:700px;float:left;display:inline;border:black solid thin;">
@@ -134,36 +151,26 @@
 						<input type="submit" value="确定"/>
 						</ul>
 					</div>
-					<div>
+					<div style="width:300px;height:670px;overflow:auto;">
 						<ul id="set-lists" style="list-style-type:none;margin:0;padding:0;">
 						</ul>
 					</div>
 				</form>
 				</div>
-				<div class="canvas-container" ondrop="drop(event)" ondragover="allowDrop(event)" style="width:700px;height:700px;float:left;display:inline;border:black solid thin;">
-					<h2 style="width:300px;height:30px;margin:0;padding:0;">画布</h2>
-					<canvas id="mianCanvas" type="width:1800px;height:1800px;">
+				<div class="canvas-container" ondrop="drop(event)" ondragover="allowDrop(event)" style="width:700px;height:700px;float:left;display:inline;border:black solid thin;overflow:auto;">
+					<!--h2 style="width:300px;height:30px;margin:0;padding:0;">画布</h2-->
+					<canvas id="mianCanvas">
 					</canvas>
 				</div>
 				<div class="echarts-controls" style="width:300px;height:700px;float:left;display:inline;border:black solid thin;">
 					<h2 style="width:300px;height:30px;margin:0;padding:0;">图表类选择</h2>
 					<div class="echarts-lists" style="width:300px;height:670px;overflow:auto;">
 						<ul style="list-style-type:none;margin:0;padding:0;width:280px;height:280px;">
-							<li style="list-style-type:none;margin:0;padding:0;border:black solid thin;">
-								<img id="line" src="{{ url_for('static',filename='./images/line.png') }}" draggable="true" ondragstart="drag(event)" alt="折线图" style="width:270px;height:270px;"/>
-							</li>
-							<li style="list-style-type:none;margin:0;padding:0;border:black solid thin;">
-								<img id="line-smooth" src="{{ url_for('static',filename='./images/line-smooth.png') }}" draggable="true" ondragstart="drag(event)" alt="曲线图" style="width:270px;height:270px;"/>
-							</li>
-							<li style="list-style-type:none;margin:0;padding:0;border:black solid thin;">
-								<img id="bar" src="{{ url_for('static',filename='./images/bar.png') }}" draggable="true" ondragstart="drag(event)" alt="条形图" style="width:270px;height:270px;"/>
-							</li>
-							<li style="list-style-type:none;margin:0;padding:0;border:black solid thin;">
-								<img id="pie" src="{{ url_for('static',filename='./images/pie.png') }}" draggable="true" ondragstart="drag(event)" alt="饼状图" style="width:270px;height:270px;"/>
-							</li>
-							<li style="list-style-type:none;margin:0;padding:0;border:black solid thin;">
-								<img id="funnel" src="{{ url_for('static',filename='./images/funnel.png') }}" draggable="true" ondragstart="drag(event)" alt="漏斗图" style="width:270px;height:270px;"/>
-							</li>
+							<img id="line" src="{{ url_for('static',filename='./images/line.png') }}" draggable="true" ondragstart="drag(event)" alt="折线图" style="width:270px;height:270px;list-style-type:none;margin:0;padding:0;border:black solid thin;"/>
+							<img id="line-smooth" src="{{ url_for('static',filename='./images/line-smooth.png') }}" draggable="true" ondragstart="drag(event)" alt="曲线图" style="width:270px;height:270px;list-style-type:none;margin:0;padding:0;border:black solid thin;"/>
+							<img id="bar" src="{{ url_for('static',filename='./images/bar.png') }}" draggable="true" ondragstart="drag(event)" alt="条形图" style="width:270px;height:270px;list-style-type:none;margin:0;padding:0;border:black solid thin;"/>
+							<img id="pie" src="{{ url_for('static',filename='./images/pie.png') }}" draggable="true" ondragstart="drag(event)" alt="饼状图" style="width:270px;height:270px;list-style-type:none;margin:0;padding:0;border:black solid thin;"/>
+							<img id="funnel" src="{{ url_for('static',filename='./images/funnel.png') }}" draggable="true" ondragstart="drag(event)" alt="漏斗图" style="width:270px;height:270px;list-style-type:none;margin:0;padding:0;border:black solid thin;"/>
 						</ul>
 					</div>
 				</div>
@@ -171,7 +178,7 @@
     	</div>
 		
 		<br />
-		
+
 
 	</body>
 </html>
