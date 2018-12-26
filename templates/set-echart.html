@@ -3,6 +3,7 @@
 	<head>
     	<meta charset="utf-8">
     	<title>set-echarts</title>
+		<script src="{{ url_for('static', filename='echarts.js') }}"></script>
 		<!--锚伪类写法
 			a:link {color: #FF0000}		/* 未访问的链接 */
 			a:visited {color: #00FF00}	/* 已访问的链接 */
@@ -88,6 +89,39 @@
 		
 		</script>
 		<script>
+			function createEchartsDom(){
+				var di=document.getElementByClassName("canvas-container");
+				var diCharts=document.createElement("div");
+				var ids="line"
+				diCharts.id=ids;
+				diCharts.style="width:400px;height:400px;float:left;display:inline;";
+				createEcharts(ids);
+			};
+			function createEcharts(cha){
+				// 基于准备好的dom，初始化echarts实例
+				var myChart = echarts.init(document.getElementById(cha));
+				// 指定图表的配置项和数据
+				var option = {
+							xAxis: {
+								type: 'category',
+								boundaryGap: false,
+								data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+							},
+							yAxis: {
+								type: 'value'
+							},
+							series: [{
+								data: [820, 932, 901, 934, 1290, 1330, 1320],
+								type: 'line',
+								areaStyle: {}
+							}]
+						};
+				// 使用刚指定的配置项和数据显示图表。
+				myChart.setOption(option);				
+			}
+		
+		</script>		
+		<script>
 			// allowDrop函数，规定拖动的对象可以放在的位置
 			function allowDrop(v){
 				v.preventDefault();
@@ -100,20 +134,23 @@
 			function drop(v){
 				v.preventDefault();
 				var data=v.dataTransfer.getData("Img");
-				v.target.appendChild(document.getElementById(data).cloneNode());
+				child=createEchartsDom();
+				v.target.appendChild(child);
 			};
 		</script>
 		<script>
-			function setConvas(){
-				var wid=document.getElementById("canvas-width").value;
-				var hei=document.getElementById("canvas-height").value;
+			function setConvas_width(){
 				var Canvas=document.getElementById("mianCanvas");
-				if(wid<700){wid=700;};
-				if(hei<700){hei=700;};
-				Canvas.offsetHeight=hei;
-				Canvas.offsetWidth=wid;
+				var wid=document.getElementById("canvas-width").value;
+				Canvas.setAttribute('width',wid);
+			}
+			function setConvas_height(){
+				var Canvas=document.getElementById("mianCanvas");
+				var hei=document.getElementById("canvas-height").value;
+				Canvas.setAttribute('height',hei);
 			}
 		</script>
+
 	</head>
 	<body>
     	<h1 style="font-style:normal" align="center">自定义图表</h1>
@@ -130,8 +167,9 @@
 				</ul>
 				</div>
 				<div style="width:600px;height:48px;">
-					宽度：<input id="canvas-width" type="number" style="width:50px;height:20px;" onchange="setConvas()" />
-					长度：<input id="canvas-height" type="number" style="width:50px;height:20px;" onchange="setConvas()" />
+					宽度：<input id="canvas-width" type="number" style="width:50px;height:20px;" onchange="setConvas_width()" />
+					长度：<input id="canvas-height" type="number" style="width:50px;height:20px;" onchange="setConvas_height()" />
+					
 				</div>
 			</div>
 			<div style="width:1400px;">
@@ -159,7 +197,8 @@
 				</div>
 				<div class="canvas-container" ondrop="drop(event)" ondragover="allowDrop(event)" style="width:700px;height:700px;float:left;display:inline;border:black solid thin;overflow:auto;">
 					<!--h2 style="width:300px;height:30px;margin:0;padding:0;">画布</h2-->
-					<canvas id="mianCanvas">
+					<canvas id="mianCanvas" width="300" height="500" style="border:2px solid #c3c3c3;">
+					Your browser does not support the canvas element.
 					</canvas>
 				</div>
 				<div class="echarts-controls" style="width:300px;height:700px;float:left;display:inline;border:black solid thin;">
@@ -178,7 +217,13 @@
     	</div>
 		
 		<br />
-
+		<script>
+		// convas 的js渲染得放到convas元素后面
+			var c=document.getElementById("mianCanvas");
+			var cxt=c.getContext("2d");
+			cxt.fillStyle="#FF0000";
+			cxt.fillRect(0,0,150,75);
+		</script>
 
 	</body>
 </html>
