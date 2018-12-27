@@ -90,12 +90,12 @@
 		</script>
 		<script>
 			function createEchartsDom(){
-				var di=document.getElementByClassName("canvas-container");
+				var di=document.getElementById("canvas-container");
 				var diCharts=document.createElement("div");
-				var ids="line"
+				ids="line"
 				diCharts.id=ids;
 				diCharts.style="width:400px;height:400px;float:left;display:inline;";
-				createEcharts(ids);
+				di.appendChild(diCharts);
 			};
 			function createEcharts(cha){
 				// 基于准备好的dom，初始化echarts实例
@@ -122,7 +122,7 @@
 		
 		</script>		
 		<script>
-			// allowDrop函数，规定拖动的对象可以放在的位置
+			// allowDrop函数，规定拖动的对象可以放在的位置,preventDefault()阻止默认行为。
 			function allowDrop(v){
 				v.preventDefault();
 			};
@@ -134,8 +134,8 @@
 			function drop(v){
 				v.preventDefault();
 				var data=v.dataTransfer.getData("Img");
-				child=createEchartsDom();
-				v.target.appendChild(child);
+				createEchartsDom();
+				createEcharts(ids);
 			};
 		</script>
 		<script>
@@ -155,7 +155,7 @@
 	<body>
     	<h1 style="font-style:normal" align="center">自定义图表</h1>
 		<!--设置左右居中的写法：margin: 0 auto-->
-    	<div id="echart_frame" style="width:1300px;height:800px;margin: 0 auto;">
+    	<div id="echart_frame" style="width:1300px;height:900px;margin: 0 auto;">
         	<div id="headlist" style="width:1300px">
 				<div style="width:1300px;height:48px;">
 				<ul id="menu">
@@ -173,7 +173,7 @@
 				</div>
 			</div>
 			<div style="width:1400px;">
-				<div class="leftlist" style="width:300px;height:700px;float:left;display:inline;border:black solid thin;">
+				<div class="leftlist" style="width:300px;height:800px;float:left;display:inline;border:black solid thin;">
 				<form id="set-echarts-form" method="get">
 					<h2 style="width:300px;height:30px;margin:0;padding:0;">参数值选择</h2>
 					<div id="leftmenu">
@@ -195,15 +195,16 @@
 					</div>
 				</form>
 				</div>
-				<div class="canvas-container" ondrop="drop(event)" ondragover="allowDrop(event)" style="width:700px;height:700px;float:left;display:inline;border:black solid thin;overflow:auto;">
+				<div id="canvas-container" style="width:700px;height:800px;float:left;display:inline;border:black solid thin;overflow:auto;" ondrop="drop(event)" ondragover="allowDrop(event)">
 					<!--h2 style="width:300px;height:30px;margin:0;padding:0;">画布</h2-->
-					<canvas id="mianCanvas" width="300" height="500" style="border:2px solid #c3c3c3;">
+					<canvas id="mianCanvas" width="600" height="700" style="border:2px solid #c3c3c3;">
 					Your browser does not support the canvas element.
 					</canvas>
+					
 				</div>
-				<div class="echarts-controls" style="width:300px;height:700px;float:left;display:inline;border:black solid thin;">
+				<div class="echarts-controls" style="width:300px;height:800px;float:left;display:inline;border:black solid thin;">
 					<h2 style="width:300px;height:30px;margin:0;padding:0;">图表类选择</h2>
-					<div class="echarts-lists" style="width:300px;height:670px;overflow:auto;">
+					<div class="echarts-lists" style="width:300px;height:770px;overflow:auto;">
 						<ul style="list-style-type:none;margin:0;padding:0;width:280px;height:280px;">
 							<img id="line" src="{{ url_for('static',filename='./images/line.png') }}" draggable="true" ondragstart="drag(event)" alt="折线图" style="width:270px;height:270px;list-style-type:none;margin:0;padding:0;border:black solid thin;"/>
 							<img id="line-smooth" src="{{ url_for('static',filename='./images/line-smooth.png') }}" draggable="true" ondragstart="drag(event)" alt="曲线图" style="width:270px;height:270px;list-style-type:none;margin:0;padding:0;border:black solid thin;"/>
@@ -220,9 +221,13 @@
 		<script>
 		// convas 的js渲染得放到convas元素后面
 			var c=document.getElementById("mianCanvas");
-			var cxt=c.getContext("2d");
-			cxt.fillStyle="#FF0000";
-			cxt.fillRect(0,0,150,75);
+			var cxt1=c.getContext("2d");
+			cxt1.fillStyle="#FF0000";
+			cxt1.fillRect(0,0,150,75);
+			var cxt2=c.getContext("2d");
+			cxt2.fillStyle="#00FF00";
+			cxt2.fillRect(50,50,200,50);
+			cxt2.stroke();
 		</script>
 
 	</body>
