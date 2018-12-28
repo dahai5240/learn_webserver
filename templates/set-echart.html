@@ -41,6 +41,15 @@
 		{
 			background-color:#cc0000;
 		}
+		.canvas-container{
+			position:relative;
+			}
+		.div-div{
+			position:absolute;
+			}
+		.div-canvas{
+			position:absolute;
+			}
 		</style>
 		<script>
 			// menusJson为传入的json字符串
@@ -154,10 +163,10 @@
 	</head>
 	<body>
     	<h1 style="font-style:normal" align="center">自定义图表</h1>
-		<!--设置左右居中的写法：margin: 0 auto-->
-    	<div id="echart_frame" style="width:1300px;height:900px;margin: 0 auto;">
-        	<div id="headlist" style="width:1300px">
-				<div style="width:1300px;height:48px;">
+		<!--设置左右居中的写法： margin: 0 auto-->
+    	<div id="echart_frame" style="width:1700px;height:900px;margin: 0 auto;">
+        	<div id="headlist" style="width:1700px">
+				<div style="width:1700px;height:48px;">
 				<ul id="menu">
 					<li class="menu" id="menu1">线形图</li>
 					<li class="menu" id="menu2">条形图</li>
@@ -172,7 +181,7 @@
 					
 				</div>
 			</div>
-			<div style="width:1400px;">
+			<div style="width:1700px;">
 				<div class="leftlist" style="width:300px;height:800px;float:left;display:inline;border:black solid thin;">
 				<form id="set-echarts-form" method="get">
 					<h2 style="width:300px;height:30px;margin:0;padding:0;">参数值选择</h2>
@@ -195,16 +204,19 @@
 					</div>
 				</form>
 				</div>
-				<div id="canvas-container" style="width:700px;height:800px;float:left;display:inline;border:black solid thin;overflow:auto;" ondrop="drop(event)" ondragover="allowDrop(event)">
+				<div class="canvas-container" style="width:1000px;height:800px;float:left;display:inline;border:black solid thin;overflow:auto;">
 					<!--h2 style="width:300px;height:30px;margin:0;padding:0;">画布</h2-->
-					<canvas id="mianCanvas" width="600" height="700" style="border:2px solid #c3c3c3;">
-					Your browser does not support the canvas element.
-					</canvas>
+					<div class="div-div" id="canvas-container" style="width:1000px;height:800px;" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+					<div class="div-convas" align="center">
+						<canvas id="mianCanvas" width="1000" height="800" style="border:2px solid #c3c3c3;">
+						Your browser does not support the canvas element.
+						</canvas>
+					</div>
 					
 				</div>
-				<div class="echarts-controls" style="width:300px;height:800px;float:left;display:inline;border:black solid thin;">
-					<h2 style="width:300px;height:30px;margin:0;padding:0;">图表类选择</h2>
-					<div class="echarts-lists" style="width:300px;height:770px;overflow:auto;">
+				<div class="echarts-controls" style="width:350px;height:800px;float:left;display:inline;border:black solid thin;">
+					<h2 style="width:350px;height:30px;margin:0;padding:0;">图表类选择</h2>
+					<div class="echarts-lists" style="width:350px;height:770px;overflow:auto;">
 						<ul style="list-style-type:none;margin:0;padding:0;width:280px;height:280px;">
 							<img id="line" src="{{ url_for('static',filename='./images/line.png') }}" draggable="true" ondragstart="drag(event)" alt="折线图" style="width:270px;height:270px;list-style-type:none;margin:0;padding:0;border:black solid thin;"/>
 							<img id="line-smooth" src="{{ url_for('static',filename='./images/line-smooth.png') }}" draggable="true" ondragstart="drag(event)" alt="曲线图" style="width:270px;height:270px;list-style-type:none;margin:0;padding:0;border:black solid thin;"/>
@@ -218,7 +230,7 @@
     	</div>
 		
 		<br />
-		<script>
+		<!--script>
 		// convas 的js渲染得放到convas元素后面
 			var c=document.getElementById("mianCanvas");
 			var cxt1=c.getContext("2d");
@@ -228,7 +240,7 @@
 			cxt2.fillStyle="#00FF00";
 			cxt2.fillRect(50,50,200,50);
 			cxt2.stroke();
-		</script>
+		</script-->
 
 	</body>
 </html>
