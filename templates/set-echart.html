@@ -44,11 +44,13 @@
 		.canvas-container{
 			position:relative;
 			}
-		.div-div{
-			position:absolute;
-			}
 		.div-canvas{
 			position:absolute;
+			}
+		.xycoordinates{
+			position:absolute;
+			left:5;
+			top:5;
 			}
 		</style>
 		<script>
@@ -98,12 +100,26 @@
 		
 		</script>
 		<script>
-			function createEchartsDom(){
+			function getMouse_Coordinates(e){
+				el=document.getElementById("canvasId");
+				cr=el.getBoundingClientRect();
+				x=e.clientX-cr.x;
+				y=e.clientY-cr.y;
+				document.getElementById("xycoordinates").innerHTML="X: "+x+",Y: "+y;
+				return {X:x,Y:y};
+			}
+			function createEchartsDom(X,Y){
+				var Dh = document.getElementsByClassName("dashbord");
 				var di=document.getElementById("canvas-container");
 				var diCharts=document.createElement("div");
-				ids="line"
+				diCharts.className="dashbord";
+				NUM = Dh.length + 1;
+				ids="ins-line"+NUM;
 				diCharts.id=ids;
-				diCharts.style="width:400px;height:400px;float:left;display:inline;";
+				diCharts.style="width:300px;height:300px;float:left;display:inline;list-style-type:none;margin:0;padding:0;border:black solid thin;";
+				diCharts.style.position="absolute";
+				diCharts.style.left=X+"px";
+				diCharts.style.top=Y+"px";
 				di.appendChild(diCharts);
 			};
 			function createEcharts(cha){
@@ -131,6 +147,7 @@
 		
 		</script>		
 		<script>
+			
 			// allowDrop函数，规定拖动的对象可以放在的位置,preventDefault()阻止默认行为。
 			function allowDrop(v){
 				v.preventDefault();
@@ -143,7 +160,9 @@
 			function drop(v){
 				v.preventDefault();
 				var data=v.dataTransfer.getData("Img");
-				createEchartsDom();
+				X=getMouse_Coordinates(v).X;
+				Y=getMouse_Coordinates(v).Y;
+				createEchartsDom(X,Y);
 				createEcharts(ids);
 			};
 		</script>
@@ -204,25 +223,20 @@
 					</div>
 				</form>
 				</div>
-				<div class="canvas-container" style="width:1000px;height:800px;float:left;display:inline;border:black solid thin;overflow:auto;">
+				<div class="canvas-container" id="canvasId" style="width:1000px;height:800px;float:left;display:inline;border:black solid thin;overflow:auto;">
 					<!--h2 style="width:300px;height:30px;margin:0;padding:0;">画布</h2-->
-					<div class="div-div" id="canvas-container" style="width:1000px;height:800px;" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-					<div class="div-convas" align="center">
-						<canvas id="mianCanvas" width="1000" height="800" style="border:2px solid #c3c3c3;">
-						Your browser does not support the canvas element.
-						</canvas>
-					</div>
-					
+					<div class="div-canvas" id="canvas-container" style="width:1000px;height:800px;" ondrop="drop(event)" ondragover="allowDrop(event)" onmousemove="getMouse_Coordinates(event)"></div>
+					<div id="xycoordinates"></div>
 				</div>
 				<div class="echarts-controls" style="width:350px;height:800px;float:left;display:inline;border:black solid thin;">
 					<h2 style="width:350px;height:30px;margin:0;padding:0;">图表类选择</h2>
 					<div class="echarts-lists" style="width:350px;height:770px;overflow:auto;">
 						<ul style="list-style-type:none;margin:0;padding:0;width:280px;height:280px;">
-							<img id="line" src="{{ url_for('static',filename='./images/line.png') }}" draggable="true" ondragstart="drag(event)" alt="折线图" style="width:270px;height:270px;list-style-type:none;margin:0;padding:0;border:black solid thin;"/>
-							<img id="line-smooth" src="{{ url_for('static',filename='./images/line-smooth.png') }}" draggable="true" ondragstart="drag(event)" alt="曲线图" style="width:270px;height:270px;list-style-type:none;margin:0;padding:0;border:black solid thin;"/>
-							<img id="bar" src="{{ url_for('static',filename='./images/bar.png') }}" draggable="true" ondragstart="drag(event)" alt="条形图" style="width:270px;height:270px;list-style-type:none;margin:0;padding:0;border:black solid thin;"/>
-							<img id="pie" src="{{ url_for('static',filename='./images/pie.png') }}" draggable="true" ondragstart="drag(event)" alt="饼状图" style="width:270px;height:270px;list-style-type:none;margin:0;padding:0;border:black solid thin;"/>
-							<img id="funnel" src="{{ url_for('static',filename='./images/funnel.png') }}" draggable="true" ondragstart="drag(event)" alt="漏斗图" style="width:270px;height:270px;list-style-type:none;margin:0;padding:0;border:black solid thin;"/>
+							<img id="style-line" src="{{ url_for('static',filename='./images/line.png') }}" draggable="true" ondragstart="drag(event)" alt="折线图" style="width:270px;height:270px;list-style-type:none;margin:0;padding:0;border:black solid thin;"/>
+							<img id="style-line-smooth" src="{{ url_for('static',filename='./images/line-smooth.png') }}" draggable="true" ondragstart="drag(event)" alt="曲线图" style="width:270px;height:270px;list-style-type:none;margin:0;padding:0;border:black solid thin;"/>
+							<img id="style-bar" src="{{ url_for('static',filename='./images/bar.png') }}" draggable="true" ondragstart="drag(event)" alt="条形图" style="width:270px;height:270px;list-style-type:none;margin:0;padding:0;border:black solid thin;"/>
+							<img id="style-pie" src="{{ url_for('static',filename='./images/pie.png') }}" draggable="true" ondragstart="drag(event)" alt="饼状图" style="width:270px;height:270px;list-style-type:none;margin:0;padding:0;border:black solid thin;"/>
+							<img id="style-funnel" src="{{ url_for('static',filename='./images/funnel.png') }}" draggable="true" ondragstart="drag(event)" alt="漏斗图" style="width:270px;height:270px;list-style-type:none;margin:0;padding:0;border:black solid thin;"/>
 						</ul>
 					</div>
 				</div>
