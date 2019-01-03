@@ -103,8 +103,8 @@
 			function getMouse_Coordinates(e){
 				el=document.getElementById("canvasId");
 				cr=el.getBoundingClientRect();
-				x=e.clientX-cr.x;
-				y=e.clientY-cr.y;
+				x=Math.round(e.clientX-cr.x);
+				y=Math.round(e.clientY-cr.y);
 				document.getElementById("xycoordinates").innerHTML="X: "+x+",Y: "+y;
 				return {X:x,Y:y};
 			}
@@ -178,7 +178,10 @@
 				Canvas.setAttribute('height',hei);
 			}
 		</script>
+		<script>
+			 
 
+		</script>
 	</head>
 	<body>
     	<h1 style="font-style:normal" align="center">自定义图表</h1>

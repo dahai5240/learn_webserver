@@ -14,7 +14,7 @@ import os
 import json
 
 app=Flask(__name__)                     #创建一个flask实例
-app.debug = True                       #设置为测试模式，有修改时自动重启，生产环境请勿开启，仅在测试环境使用
+#app.debug = True                       #设置为测试模式，有修改时自动重启，生产环境请勿开启，仅在测试环境使用
 
 class data():
     def __init__(self):
@@ -279,4 +279,4 @@ def set_echarts():
     return render_template('set-echart.html', params=params, menus=menus, menusJson=menusJson)
 
 if __name__=='__main__':
-    app.run()                           #启动socket
+    app.run(debug = True)                           #启动socket
